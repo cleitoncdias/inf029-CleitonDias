@@ -413,7 +413,49 @@ int q5(int num)
 
 int q6(int numerobase, int numerobusca)
 {
-    int qtdOcorrencias;
+    int numAux, qtdOcorrencias = 0;
+
+    int tamBusca = 0, tamCorte, tamBase = 0, x, y, tamEncontrado = 0;
+
+    y = 10;
+
+    do{
+        if (numerobase % y != numerobase){
+            tamBase++;
+            y *= 10;
+        } else{
+            tamEncontrado = 1;
+        }
+    }while(!tamEncontrado);
+
+    y = 10;
+    tamEncontrado = 0;
+
+    do{    
+        if (numerobusca % y != numerobusca){
+            tamBusca++;
+            y *= 10;
+        }else{
+            tamEncontrado = 1;
+        }
+    }while(!tamEncontrado);
+
+    x = 1;
+    numAux = numerobase;
+    tamCorte = tamBusca;
+
+    do{
+        if (numerobusca == ((numAux / x) % y)){
+            qtdOcorrencias++;
+            numAux /= x * 10;
+            x = 1;
+            tamBase -= tamCorte;
+        } else{
+            x *= 10;
+            tamCorte++;
+        }
+    }while(tamBusca > tamBase);
+
     return qtdOcorrencias;
 }
 
