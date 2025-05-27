@@ -11,10 +11,10 @@
 //  O aluno deve preencher seus dados abaixo, e implementar as questões do trabalho
 
 //  ----- Dados do Aluno -----
-//  Nome:
-//  email:
-//  Matrícula:
-//  Semestre:
+//  Nome: Cleiton Conceição Dias
+//  email: cleitondias2906@gmail.com
+//  Matrícula: 20242160015
+//  Semestre: 2º
 
 //  Copyright © 2016 Renato Novais. All rights reserved.
 // Última atualização: 07/05/2021 - 19/08/2016
@@ -22,7 +22,7 @@
 // #################################################
 
 #include <stdio.h>
-#include "PrimeiroUltimoNomeMATRICULA.h" // Substitua pelo seu arquivo de header renomeado
+#include "CleitonDias-20242160015.h" // Substitua pelo seu arquivo de header renomeado
 #include <stdlib.h>
 
 DataQuebrada quebraData(char data[]);
@@ -92,17 +92,79 @@ int teste(int a)
  */
 int q1(char data[])
 {
-  int datavalida = 1;
+  int i;
+  char *p;
+  int tam[] = {0, 0, 0};
 
-  //quebrar a string data em strings sDia, sMes, sAno
+  p = data;
 
+  for(i = 0; i <= 2; i++){
+    while(*p != '/' && *p){
+      tam[i]++;
+      p++;
+    }
+    p++; 
+  }
 
-  //printf("%s\n", data);
+  if((tam[0] == 0 || tam[0] > 2) || (tam[1] == 0 || tam[1] > 2) || (tam[2] != 2 && tam[2] != 4)){
+    return 0;
+  }
+  
+  char *sDia = (char *) malloc((tam[0] + 1) * sizeof(char));
+  char *sMes = (char *) malloc((tam[1] + 1) * sizeof(char));
+  char *sAno = (char *) malloc((tam[2] + 1) * sizeof(char));
 
-  if (datavalida)
-      return 1;
-  else
+  p = data;
+
+  for(i = 0; i < tam[0]; i++){
+    sDia[i] = p[i];
+  }
+  sDia[tam[0]] = '\0';
+
+  for(i = 0; i < tam[1]; i++){
+    sMes[i] = p[tam[0] + 1 + i];
+  }
+  sMes[tam[1]] = '\0';
+
+  for(i = 0; i < tam[2]; i++){
+    sAno[i] = p[tam[0] + tam[1] + 2 + i];
+  }
+  sAno[tam[2]] = '\0';
+
+  int dia = atoi(sDia);
+  int mes = atoi(sMes);
+  int ano = atoi(sAno);
+
+  free(sDia);
+  free(sMes);
+  free(sAno);
+
+  if (ano >=0 && ano <= 99){
+    ano += 2000;
+  }
+
+  if (mes <= 0 || mes > 12){
+    return 0;
+  } else{
+    if ((mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12) && (dia <= 0 || dia > 31)){
       return 0;
+    }
+
+    else if((mes == 4 || mes == 6 || mes == 9 || mes == 11) && (dia <= 0 || dia > 30)){
+      return 0;
+    }
+
+    else if(mes == 2){
+      if(dia <= 0 || dia > 29){
+        return 0;
+      }
+      if(dia == 29){
+        if((ano % 4 != 0) || (ano % 100 == 0 && ano % 400 != 0)) return 0;
+      } 
+    }
+  }
+
+  return 1;
 }
 
 
@@ -121,6 +183,66 @@ int q1(char data[])
     4 -> datainicial > datafinal
     Caso o cálculo esteja correto, os atributos qtdDias, qtdMeses e qtdAnos devem ser preenchidos com os valores correspondentes.
  */
+void extrairData(const char *data, int *dia, int *mes, int *ano){
+  int i;
+  char *p;
+  int tam[] = {0, 0, 0};
+
+  p = (char *)data;
+
+  for(i = 0; i <= 2; i++){
+    while(*p != '/' && *p){
+      tam[i]++;
+      p++;
+    }
+    p++; 
+  }
+  
+  char *sDia = (char *) malloc((tam[0] + 1) * sizeof(char));
+  char *sMes = (char *) malloc((tam[1] + 1) * sizeof(char));
+  char *sAno = (char *) malloc((tam[2] + 1) * sizeof(char));
+
+  p = (char *)data;
+
+  for(i = 0; i < tam[0]; i++){
+    sDia[i] = p[i];
+  }
+  sDia[tam[0]] = '\0';
+
+  for(i = 0; i < tam[1]; i++){
+    sMes[i] = p[tam[0] + 1 + i];
+  }
+  sMes[tam[1]] = '\0';
+
+  for(i = 0; i < tam[2]; i++){
+    sAno[i] = p[tam[0] + tam[1] + 2 + i];
+  }
+  sAno[tam[2]] = '\0';
+
+  *dia = atoi(sDia);
+  *mes = atoi(sMes);
+  *ano = atoi(sAno);
+
+  free(sDia);
+  free(sMes);
+  free(sAno);
+
+  return;
+}
+
+int qtdDiasNoMes(int mes, int ano){
+  if (mes == 2) {
+    if((ano % 4 == 0 && ano % 100 != 0) || (ano % 400 == 0)){
+      return 29;
+    } else {
+      return 28;
+    }
+  } else if (mes == 4 || mes == 6 || mes == 9 || mes == 11) {
+    return 30;
+  } else {
+    return 31;
+  }
+}
 DiasMesesAnos q2(char datainicial[], char datafinal[])
 {
 
@@ -135,14 +257,45 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
       return dma;
     }else{
       //verifique se a data final não é menor que a data inicial
-      
-      //calcule a distancia entre as datas
+      const char *datas[2] = {datainicial, datafinal};
+      int dia[2], mes[2], ano[2];
 
+      for(int i = 0; i < 2; i++){
+        extrairData(datas[i], &dia[i], &mes[i], &ano[i]);
+      }
 
-      //se tudo der certo
-      dma.retorno = 1;
-      return dma;
-      
+      if(ano[0] > ano[1]){
+        dma.retorno = 4;
+        return dma;
+      }else if((ano[0] == ano[1]) && mes[0] > mes[1]){
+        dma.retorno = 4;
+        return dma;
+      }else if((ano[0] == ano[1]) && (mes[0] == mes[1]) && dia[0] > dia[1]){
+        dma.retorno = 4;
+        return dma;
+      }else{
+        //calcule a distancia entre as datas
+        //se tudo der certo
+        if(dia[0] > dia[1]){
+          mes[1] -= 1;
+          dia[1] += qtdDiasNoMes(mes[1], ano[1]);
+          dma.qtdDias = dia[1] - dia[0];
+        } else{
+          dma.qtdDias = dia[1] - dia[0];
+        }
+
+        if(mes[0] > mes[1]){
+          ano[1] -= 1;
+          mes[1] += 12;
+          dma.qtdMeses = mes[1] - mes[0];
+        } else{
+          dma.qtdMeses = mes[1] - mes[0];
+        }
+
+        dma.qtdAnos = ano[1] - ano[0];
+        dma.retorno = 1;
+        return dma;
+      }      
     }
     
 }
@@ -159,8 +312,25 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
  */
 int q3(char *texto, char c, int isCaseSensitive)
 {
-    int qtdOcorrencias = -1;
-
+    int qtdOcorrencias = 0;
+    if(isCaseSensitive == 1){
+      while(*texto){
+        if (c == *texto) qtdOcorrencias++;
+        texto++;
+      }
+    }else{     
+      if (c > 64 && c < 91){
+        while(*texto){
+          if (c == *texto || (c + 32) == *texto) qtdOcorrencias++;
+          texto++;
+        }
+      } else{
+        while(*texto){
+          if (c == *texto || (c - 32) == *texto) qtdOcorrencias++;
+          texto++;
+        }
+      }            
+    }
     return qtdOcorrencias;
 }
 
@@ -198,8 +368,37 @@ int q4(char *strTexto, char *strBusca, int posicoes[30])
 
 int q5(int num)
 {
+  int numAux = 0, tamEncontrado = 0;
+  int tam = 1, x, y, i;
 
-    return num;
+  x = 10;
+
+  do{    
+    if (num % x != num){
+      tam++;
+      x *= 10;
+    }
+    else{
+      tamEncontrado = 1;
+    }
+  }while(!tamEncontrado);
+
+  x = 1;
+  y = 1;
+
+  for(i = 1; i < tam; i++){
+    y *= 10;
+  }
+
+  for (i = 0; i < tam; i++){
+    numAux += (((num / x) % 10) * y);
+    x *= 10;
+    y /= 10;
+  }
+
+  num = numAux;
+
+  return num;
 }
 
 /*

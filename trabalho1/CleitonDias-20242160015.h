@@ -11,17 +11,17 @@
 //  O aluno deve preencher seus dados abaixo, e implementar as questões do trabalho
 
 //  ----- Dados do Aluno -----
-//  Nome:
-//  email:
-//  Matrícula:
-//  Semestre:
+//  Nome: Cleiton Conceição Dias
+//  email: cleitondias2906@gmail.com
+//  Matrícula: 20242160015
+//  Semestre: 2º
 
 //  Copyright © 2016 Renato Novais. All rights reserved.
 // Última atualização: 07/05/2021
 
 // #################################################
-#ifndef TRABALHO1_PRIMEIROULTIMONOMEMATRICULA_H
-#define TRABALHO1_PRIMEIROULTIMONOMEMATRICULA_H
+#ifndef TRABALHO1_CleitonDias20242160015_H
+#define TRABALHO1_CleitonDias20242160015_H
 
 typedef struct DQ
 {
@@ -52,4 +52,4 @@ int q6(int numerobase, int numerobusca);
 int q7(char matriz[8][10], char palavra[5]);
 DataQuebrada quebraData(char data[]);
 
-#endif  // TRABALHO1_PRIMEIROULTIMONOMEMATRICULA_H
+#endif  // TRABALHO1_CleitonDias20242160015_H

@@ -18,7 +18,7 @@
 #include <string.h>
 
 //renomeie o arquivo do include abaixo para PrimeiroUltimoNomeMATRICULA.h
-#include "PrimeiroUltimoNomeMATRICULA.h"
+#include "CleitonDias-20242160015.h"
 
 void testSomar();    //função utilizada para testes
 void testFatorial(); //função utilizada para testes
@@ -32,15 +32,15 @@ void testQ7();
 
 int main()
 {
-    //testSomar();
-    //testFatorial();
-    testQ1();
-    testQ2();
+    // testSomar();
+    // testFatorial();
+    // testQ1();
+    // testQ2();
     testQ3();
-    testQ4();
-    testQ5();
-    testQ6();
-    testQ7();
+    // testQ4();
+    // testQ5();
+    // testQ6();
+    // testQ7();
 }
 
 void testSomar()
