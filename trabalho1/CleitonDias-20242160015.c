@@ -96,7 +96,7 @@ int q1(char data[])
   char *p;
   int tam[] = {0, 0, 0};
 
-  p = data;
+  p = (char *)data;
 
   for(i = 0; i <= 2; i++){
     while(*p != '/' && *p){
@@ -114,7 +114,7 @@ int q1(char data[])
   char *sMes = (char *) malloc((tam[1] + 1) * sizeof(char));
   char *sAno = (char *) malloc((tam[2] + 1) * sizeof(char));
 
-  p = data;
+  p = (char *)data;
 
   for(i = 0; i < tam[0]; i++){
     sDia[i] = p[i];
@@ -427,11 +427,30 @@ int q6(int numerobase, int numerobusca)
     1 se achou 0 se não achou
  */
 
- int q7(char matriz[8][10], char palavra[5])
- {
-     int achou;
-     return achou;
- }
+ int q7(char matriz[8][10], char palavra[5]) {
+  for (int i = 0; i < 8; i++) {
+    for (int j = 0; j < 10; j++) {
+      int direcoes[8][2] = {
+          {0, 1},{0, -1},{1, 0},{-1, 0},
+          {1, 1},{1, -1},{-1, -1},{-1, 1}
+      };
+
+      for (int d = 0; d < 8; d++) {
+          int variacaoLinha = direcoes[d][0], variacaoColuna = direcoes[d][1], k;
+
+          for (k = 0; k < 5; k++) {
+              int x = i + k * variacaoLinha, y = j + k * variacaoColuna;
+              if (x < 0 || x >= 8 || y < 0 || y >= 10) break;
+              if (matriz[x][y] != palavra[k]) break;
+          }
+
+          if (k == 5) return 1;
+      }
+    }
+  }
+    return 0;
+}
+
 
 
 
