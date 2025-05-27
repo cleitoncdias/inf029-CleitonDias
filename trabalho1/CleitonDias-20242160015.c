@@ -450,11 +450,12 @@ int q6(int numerobase, int numerobusca)
             numAux /= x * 10;
             x = 1;
             tamBase -= tamCorte;
+            tamCorte = tamBusca;
         } else{
             x *= 10;
             tamCorte++;
         }
-    }while(tamBusca > tamBase);
+    }while(tamBusca > tamBase || tamBase > tamCorte);
 
     return qtdOcorrencias;
 }
