@@ -351,9 +351,48 @@ int q3(char *texto, char c, int isCaseSensitive)
  */
 int q4(char *strTexto, char *strBusca, int posicoes[30])
 {
-    int qtdOcorrencias = -1;
+ char *pTexto = strTexto;
+ int qtdOcorrencias = 0;
+ int posVisual = 1;
 
-    return qtdOcorrencias;
+ while (*pTexto) {
+  char *p1 = pTexto;
+  char *p2 = strBusca;
+  char *inicioPalavra = pTexto;
+  int encontrou = 1;
+
+  while (*p2) {
+   if (*p1 != *p2) {
+    encontrou = 0;
+    break;
+   }
+   p1++;
+   p2++;
+  }
+
+  if (encontrou) {
+   int inicio = posVisual;
+   int fim = inicio;
+   char *tmp = inicioPalavra;
+
+   while (tmp < p1) {
+    if ((*tmp & 0xC0) != 0x80) fim++;
+    tmp++;
+   }
+
+   fim--;
+
+   posicoes[qtdOcorrencias* 2] = inicio;
+   posicoes[qtdOcorrencias * 2 + 1] = fim;
+   qtdOcorrencias++;
+  }
+
+  if ((*pTexto & 0xC0) != 0x80) posVisual++;
+  pTexto++;
+ }
+
+ return qtdOcorrencias;
+
 }
 
 /*
